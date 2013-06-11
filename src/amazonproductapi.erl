@@ -6,6 +6,7 @@
 -export([
          itemSearch/2,
          itemSearch/3,
+         itemSearch/4,
          itemLookup/3
         ]).
 
@@ -20,6 +21,12 @@ itemSearch(Keywords, Config) ->
 -spec itemSearch(string(), integer(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
 itemSearch(Keywords, ItemPage, Config) ->
     do_rest_call(get, "ItemSearch", [{"Keywords", Keywords}, {"ItemPage", integer_to_list(ItemPage)}], Config).
+
+-spec itemSearch(string(), list(), integer(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
+itemSearch(Keywords, AdditionalParams, ItemPage, Config) ->
+    Params = lists:append([[{"Keywords", Keywords}, {"ItemPage", integer_to_list(ItemPage)}], AdditionalParams]),
+    error_logger:info_report([{params, Params}]),
+    do_rest_call(get, "ItemSearch", Params, Config).
 
 -spec itemLookup(string(), string(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
 itemLookup(IdType, ItemId, Config) ->

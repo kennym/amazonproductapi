@@ -29,6 +29,12 @@ itemSearch_test() ->
     xmlElement = element(1, XML),
     ok.
 
+itemSearch4_test() ->
+    setup(),
+    C = get_config(),
+    {ok, XML} = amazonproductapi:itemSearch("shades", [], 1, C),
+    xmlElement = element(1, XML),
+    ok.
 
 itemLookup_test() ->
     setup(),
